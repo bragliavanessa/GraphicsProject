@@ -47,10 +47,15 @@
 
 #include <QApplication>
 #include "GLRender.h"
-
+#include "globals.h"
+#include <string.h>
 //! [0]
 int main(int argc, char *argv[])
 {
+    global_path = argv[0];
+    global_path = global_path.substr(0, global_path.size()-9);
+    global_path+= "/../../..";
+    std::cout<<"NEWP: "<<global_path<<endl;
     QApplication app(argc, argv);
     GLRender viewer(0, Qt::Window);
 

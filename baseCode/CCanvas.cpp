@@ -8,6 +8,8 @@ using namespace std;
 
 void CCanvas::initializeGL()
 {
+//    char * texture = strcat(global_path,"/../images/train.jpg");
+//    printf("%s\n",texture);
     glClearColor(0.0f, 0.0f, 0.0f, 0.5f);			   // black background
     glClearDepth(1.0f);								   // depth buffer setup
     glEnable(GL_DEPTH_TEST);						   // enables depth testing
