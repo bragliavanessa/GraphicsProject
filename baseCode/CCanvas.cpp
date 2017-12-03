@@ -8,14 +8,12 @@ using namespace std;
 
 void CCanvas::initializeGL()
 {
-//    char * texture = strcat(global_path,"/../images/train.jpg");
-//    printf("%s\n",texture);
     glClearColor(0.0f, 0.0f, 0.0f, 0.5f);			   // black background
     glClearDepth(1.0f);								   // depth buffer setup
     glEnable(GL_DEPTH_TEST);						   // enables depth testing
     glDepthFunc(GL_LEQUAL);							   // the type of depth testing to do
     glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST); // really nice perspective calculations
-    glShadeModel(GL_SMOOTH);
+    glShadeModel(GL_FLAT);
 
     // One light source
     glEnable(GL_LIGHTING);
@@ -199,11 +197,11 @@ void CCanvas::paintGL()
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
     // Setup the current view
-    setView(View::Perspective);
+    setView(View::Cockpit);
 
     // You can always change the light position here if you want
-    GLfloat lightpos[] = {0.0f, 0.0f, 10.0f, 0.0f};
-    glLightfv(GL_LIGHT0, GL_POSITION, lightpos);
+    //    GLfloat lightpos[] = {100.0f, 100.0f, 100000.0f, 0.0f};
+    //    glLightfv(GL_LIGHT0, GL_POSITION, lightpos);
 
     /**** Axes in the global coordinate system ****/
     /*
@@ -253,9 +251,22 @@ void CCanvas::paintGL()
      *  GLfloat matrix[16];
      *  glGetFloatv (GL_MODELVIEW_MATRIX, matrix);
     */
-
+    glColor3f(0.5f, 0.5f, 0.5f);
+    GLfloat amb[]  = {0.6f, 0.6f, 0.6f};
+    GLfloat diff[] = {0.7f, 0.7f, 0.7f};
+    GLfloat spec[] = {0.1f, 0.1f, 0.1f};
+    GLfloat shin = 0.0001;
+    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, amb);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, diff);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, spec);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, &shin);
     // Look at the ObjModel class to see how the drawing is done
+    glTranslatef(0.f,0.f,-10.0f);
+    static float tau=35;
+    glRotatef(tau,0.f,1.f,0.f);
     modelTrain.draw();
+    tau+=1;
+
     // Look at the PlyModel class to see how the drawing is done
     /*
      * The models you load can have different scales. If you are drawing a proper model but nothing
@@ -267,4 +278,11 @@ void CCanvas::paintGL()
     // object with a new transformation and now you go back to the previous one
     glPopMatrix();
     textureTrain.unbind();
+    glPushMatrix();
+    glTranslatef(sin(tau/100)*3,3.5f,-10.0f);
+    glRotatef(-tau,0.f,1.f,0.f);
+    Sphere s(20, 20);
+    s.draw();
+    glPopMatrix();
+
 }

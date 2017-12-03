@@ -28,7 +28,7 @@ class CCanvas : public QGLWidget
 public:
     explicit CCanvas(QWidget *parent = 0) : QGLWidget(parent),
         textureTrain(global_path + "/../images/train.jpg"),
-        modelTrain(global_path + "/../images/train.obj"),
+        modelTrain(global_path + "/../images/ship.obj"),
         modelTrain2(global_path + "/../images/train.ply")
     {
         QTimer *timer = new QTimer(this);
