@@ -1,6 +1,7 @@
 #include "CCanvas.h"
 #include "Base.h"
 #include "Sphere.h"
+#include "Circle.h"
 
 using namespace std;
 
@@ -45,6 +46,9 @@ void CCanvas::initializeGL()
      */
     textureTrain.setTexture();
     textureSky.setTexture();
+    texturePlanet1.setTexture();
+    texturePlanet2.setTexture();
+    texturePlanet3.setTexture();
     skybox.init();
     modelTrain.init();
     modelTrain2.init();
@@ -204,16 +208,20 @@ void CCanvas::paintGL()
 
     // Setup the current view
     setView(View::Cockpit);
-    glRotated(tau,2,3,1);
+//    glRotated(0,2,3,1);
+    glRotated(tau/3,5,3,1);
     textureSky.bind();
     glPushMatrix();
-    glScaled(10,10,10);
-    glRotated(tau,0,1,0);
+    glRotated(0,0,1,0);
+    glScaled(20,20,20);
+
     skybox.draw();
     glPopMatrix();
     glPushMatrix();
-    glScaled(10,10,10);
-    glRotated(180+tau,0,1,0);
+//    glRotated(180+tau,0,1,0);
+    glRotated(180,0,1,0);
+    glScaled(20,20,20);
+
     skybox.draw();
     glPopMatrix();
     textureSky.unbind();
@@ -234,9 +242,10 @@ void CCanvas::paintGL()
     glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, spec);
     glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, &shin);
     // Look at the ObjModel class to see how the drawing is done
+    glScaled(2,2,2);
     glTranslatef(0.f,0.f,-10.0f);
 
-    glRotatef(tau,0.f,1.f,0.f);
+    glRotatef(tau/4,0.f,1.f,0.f);
     modelTrain.draw();
     tau+=1;
 
@@ -251,11 +260,44 @@ void CCanvas::paintGL()
     // object with a new transformation and now you go back to the previous one
     glPopMatrix();
     textureTrain.unbind();
+    texturePlanet1.bind();
     glPushMatrix();
-    glTranslatef(sin(tau/100)*3,3.5f,-10.0f);
-    glRotatef(-tau,0.f,1.f,0.f);
-    Sphere s(20, 20);
+    glScaled(50,40,40);
+    glTranslatef(0.f,-1.5f,-2.0f);
+    glRotatef(-tau/10,0.f,1.f,0.f);
+    Sphere s(40, 40);
     s.draw();
     glPopMatrix();
+    texturePlanet1.unbind();
+
+    textureTrain.bind();
+    glPushMatrix();
+    glScaled(10,10, 10);
+    glTranslatef(12.f,5.f,-20.0f);
+    glRotatef(-tau,0.f,1.f,0.f);
+    Sphere planet1(40, 40);
+    planet1.draw();
+    glPopMatrix();
+    textureTrain.unbind();
+
+    texturePlanet2.bind();
+    glPushMatrix();
+    glScaled(10,10, 10);
+    glTranslatef(-5.f,5.f,10.0f);
+    glRotatef(-tau/5,0.f,1.f,0.f);
+    Sphere planet2(40, 40);
+    planet2.draw();
+    glPopMatrix();
+    texturePlanet2.unbind();
+
+    texturePlanet3.bind();
+    glPushMatrix();
+    glTranslatef(-10.f,9.f,0.0f);
+    glScaled(4,4, 4);
+    glRotatef(-tau/10,0.f,1.f,0.f);
+    Sphere planet3(40, 40);
+    planet3.draw();
+    glPopMatrix();
+    texturePlanet3.unbind();
 
 }

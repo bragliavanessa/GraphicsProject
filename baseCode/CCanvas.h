@@ -27,7 +27,10 @@ class CCanvas : public QGLWidget
 
 public:
     explicit CCanvas(QWidget *parent = 0) : QGLWidget(parent),
-        textureTrain(global_path + "/../images/train.jpg"),
+        textureTrain(global_path + "/../images/train1.jpg"),
+        texturePlanet1(global_path + "/../images/earth.jpg"),
+        texturePlanet2(global_path + "/../images/moon.png"),
+        texturePlanet3(global_path + "/../images/pluton.png"),
         modelTrain(global_path + "/../images/ship.obj"),
         modelTrain2(global_path + "/../images/train.ply"),
         skybox(global_path + "/../images/skybox.obj"),
@@ -70,6 +73,9 @@ private:
     // Models and textures
     Texture textureTrain;
     Texture textureSky;
+    Texture texturePlanet1;
+    Texture texturePlanet2;
+    Texture texturePlanet3;
     // Model loaded from .obj format
     ObjModel modelTrain;
     ObjModel skybox;

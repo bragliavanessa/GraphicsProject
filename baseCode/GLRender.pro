@@ -23,7 +23,8 @@ HEADERS += ./Base.h \
            ./PlyModel.h \
            ./objloader.hpp \
            ./tinyply.h \
-    globals.h
+    globals.h \
+    Circle.h
 
 # Source files
 SOURCES += ./CCanvas.cpp \
@@ -34,7 +35,8 @@ SOURCES += ./CCanvas.cpp \
            ./PlyModel.cpp \
            ./objloader.cpp \
            ./tinyply.cpp \
-    globals.cpp
+    globals.cpp \
+    Circle.cpp
 
 # Forms
 FORMS += ./GLRender.ui
