@@ -44,6 +44,8 @@ void CCanvas::initializeGL()
      * Before you can use OBJ/PLY model, you need to initialize it by calling init() method.
      */
     textureTrain.setTexture();
+    textureSky.setTexture();
+    skybox.init();
     modelTrain.init();
     modelTrain2.init();
 }
@@ -187,9 +189,13 @@ void CCanvas::setView(View _view) {
 
 void CCanvas::paintGL()
 {
+    static float tau=35;
     // clear screen and depth buffer
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
+    GLfloat amb[]  = {1, 1, 1};
+    GLfloat diff[] = {0.7f, 0.7f, 0.7f};
+    GLfloat spec[] = {0.1f, 0.1f, 0.1f};
+    GLfloat shin = 0.0001;
     // set model-view matrix
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
@@ -198,48 +204,19 @@ void CCanvas::paintGL()
 
     // Setup the current view
     setView(View::Cockpit);
-
-    // You can always change the light position here if you want
-    //    GLfloat lightpos[] = {100.0f, 100.0f, 100000.0f, 0.0f};
-    //    glLightfv(GL_LIGHT0, GL_POSITION, lightpos);
-
-    /**** Axes in the global coordinate system ****/
-    /*
-    glDisable(GL_LIGHTING);
-    glColor3f(1.0f, 0.0f, 0.0f);
-    glBegin(GL_LINES);
-        glVertex3f(-6.0f, 0.0f, 0.0f);
-        glVertex3f(6.0f, 0.0f, 0.0f);
-    glEnd();
-    glColor3f(0.0f, 1.0f, 0.0f);
-    glBegin(GL_LINES);
-        glVertex3f(0.0f, -6.0f, 0.0f);
-        glVertex3f(0.0f, 6.0f, 0.0f);
-    glEnd();
-    glColor3f(0.0f, 0.0f, 1.0f);
-    glBegin(GL_LINES);
-        glVertex3f(0.0f, 0.0f, -6.0f);
-        glVertex3f(0.0f, 0.0f, 6.0f);
-    glEnd();
-    glEnable(GL_LIGHTING);
-    */
-    /**** Setup and draw your objects ****/
-
-    // You can freely enable/disable some of the lights in the scene as you wish
-    //glEnable(GL_LIGHT0);
-    //glDisable(GL_LIGHT1);
-    // Before drawing an object, you can set its material properties
-    /*
-    glColor3f(0.5f, 0.5f, 0.5f);
-    GLfloat amb[]  = {0.1f, 0.1f, 0.1f};
-    GLfloat diff[] = {0.7f, 0.7f, 0.7f};
-    GLfloat spec[] = {0.1f, 0.1f, 0.1f};
-    GLfloat shin = 0.0001;
-    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, amb);
-    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, diff);
-    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, spec);
-    glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, &shin);
-    */
+    glRotated(tau,2,3,1);
+    textureSky.bind();
+    glPushMatrix();
+    glScaled(10,10,10);
+    glRotated(tau,0,1,0);
+    skybox.draw();
+    glPopMatrix();
+    glPushMatrix();
+    glScaled(10,10,10);
+    glRotated(180+tau,0,1,0);
+    skybox.draw();
+    glPopMatrix();
+    textureSky.unbind();
 
     // Drawing the object with texture
     textureTrain.bind();
@@ -252,17 +229,13 @@ void CCanvas::paintGL()
      *  glGetFloatv (GL_MODELVIEW_MATRIX, matrix);
     */
     glColor3f(0.5f, 0.5f, 0.5f);
-    GLfloat amb[]  = {0.6f, 0.6f, 0.6f};
-    GLfloat diff[] = {0.7f, 0.7f, 0.7f};
-    GLfloat spec[] = {0.1f, 0.1f, 0.1f};
-    GLfloat shin = 0.0001;
     glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, amb);
     glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, diff);
     glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, spec);
     glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, &shin);
     // Look at the ObjModel class to see how the drawing is done
     glTranslatef(0.f,0.f,-10.0f);
-    static float tau=35;
+
     glRotatef(tau,0.f,1.f,0.f);
     modelTrain.draw();
     tau+=1;

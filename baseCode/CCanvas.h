@@ -29,7 +29,9 @@ public:
     explicit CCanvas(QWidget *parent = 0) : QGLWidget(parent),
         textureTrain(global_path + "/../images/train.jpg"),
         modelTrain(global_path + "/../images/ship.obj"),
-        modelTrain2(global_path + "/../images/train.ply")
+        modelTrain2(global_path + "/../images/train.ply"),
+        skybox(global_path + "/../images/skybox.obj"),
+        textureSky(global_path + "/../images/skybox.jpg")
     {
         QTimer *timer = new QTimer(this);
         connect(timer, SIGNAL(timeout()), this, SLOT(updateGL()));
@@ -67,8 +69,10 @@ private:
 
     // Models and textures
     Texture textureTrain;
+    Texture textureSky;
     // Model loaded from .obj format
     ObjModel modelTrain;
+    ObjModel skybox;
     // Model loaded from .ply format
     PlyModel modelTrain2;
 };
