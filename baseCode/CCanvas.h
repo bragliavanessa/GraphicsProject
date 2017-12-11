@@ -34,6 +34,13 @@ public:
         modelTrain(global_path + "/../images/ship.obj"),
         modelTrain2(global_path + "/../images/train.ply"),
         skybox(global_path + "/../images/skybox.obj"),
+        body(global_path + "/../images/body.obj"),
+        logo(global_path + "/../images/logo.obj"),
+        tail(global_path + "/../images/tail.obj"),
+        wing_left(global_path + "/../images/wing_left.obj"),
+        wing_right(global_path + "/../images/wing_right.obj"),
+        turret(global_path + "/../images/turret.obj"),
+        engine(global_path + "/../images/engine.obj"),
         textureSky(global_path + "/../images/skybox.jpg")
     {
         QTimer *timer = new QTimer(this);
@@ -79,6 +86,15 @@ private:
     // Model loaded from .obj format
     ObjModel modelTrain;
     ObjModel skybox;
+
+    ObjModel body;
+    ObjModel logo;
+    ObjModel tail;
+    ObjModel engine;
+    ObjModel wing_left;
+    ObjModel wing_right;
+    ObjModel turret;
+
     // Model loaded from .ply format
     PlyModel modelTrain2;
 };

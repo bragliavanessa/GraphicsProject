@@ -52,6 +52,13 @@ void CCanvas::initializeGL()
     skybox.init();
     modelTrain.init();
     modelTrain2.init();
+    engine.init();
+    turret.init();
+    body.init();
+    wing_left.init();
+    wing_right.init();
+    tail.init();
+    logo.init();
 }
 
 //-----------------------------------------------------------------------------
@@ -187,13 +194,18 @@ void CCanvas::setView(View _view) {
         break;
     case Cockpit:
         // Maybe you want to have an option to view the scene from the train cockpit, up to you
+        glTranslatef(0.f, 20.f, -65.0f);
+        //        glRotatef(180.0f, 1.0f, 0.0f, 0.0f);
         break;
     }
 }
 
 void CCanvas::paintGL()
 {
+    const double RADIUS = 17.1f;
+    const double INTERVAL = 0.01;
     static float tau=35;
+    static float alpha=90;
     // clear screen and depth buffer
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     GLfloat amb[]  = {1, 1, 1};
@@ -208,8 +220,8 @@ void CCanvas::paintGL()
 
     // Setup the current view
     setView(View::Cockpit);
-//    glRotated(0,2,3,1);
-    glRotated(tau/3,5,3,1);
+    //    glRotated(0,2,3,1);
+    //    glRotated(tau/3,5,3,1);
     textureSky.bind();
     glPushMatrix();
     glRotated(0,0,1,0);
@@ -218,7 +230,7 @@ void CCanvas::paintGL()
     skybox.draw();
     glPopMatrix();
     glPushMatrix();
-//    glRotated(180+tau,0,1,0);
+    //    glRotated(180+tau,0,1,0);
     glRotated(180,0,1,0);
     glScaled(20,20,20);
 
@@ -236,6 +248,18 @@ void CCanvas::paintGL()
      *  GLfloat matrix[16];
      *  glGetFloatv (GL_MODELVIEW_MATRIX, matrix);
     */
+    double x = RADIUS * cos(5);
+    double y = RADIUS;
+    double z = RADIUS * sin(5);
+
+    //    glScaled(25,20,20);
+    //    glTranslatef(0.f,-1.5f,-1.0f);
+
+    //    double deltaX = z * cos(alpha) - x * sin(alpha);
+    double deltaX = 0 + cos(alpha)*RADIUS;
+    //    double deltaY = y * cos(alpha) - 20;
+    double deltaY = -15.f + sin(alpha)*RADIUS;
+    double deltaZ = -10; //+ cos(alpha)*RADIUS + sin(alpha)*RADIUS; //x * cos(alpha) + z * sin(alpha);
     glColor3f(0.5f, 0.5f, 0.5f);
     glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, amb);
     glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, diff);
@@ -243,12 +267,70 @@ void CCanvas::paintGL()
     glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, &shin);
     // Look at the ObjModel class to see how the drawing is done
     glScaled(2,2,2);
-    glTranslatef(0.f,0.f,-10.0f);
+    glTranslatef(0.f,-10.f,-10.0f);
+    glRotatef(alpha*100,0,1,0);
 
-    glRotatef(tau/4,0.f,1.f,0.f);
-    modelTrain.draw();
+    glTranslatef(20, 0, 0);
+    //    glRotatef(50,cos(alpha),sin(alpha),0);
+    //    modelTrain.draw();
+    glRotatef(180,0,1,0);
+
+    glPushMatrix();
+    glTranslatef(0.f,2.05f,1.4f);
+    glRotatef(alpha*60,0,1,0);
+    turret.draw();
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(0.f,0.f,-8.2f);
+    glRotatef(180, 0, 1, -0.1f);
+    engine.draw();
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(0.f, 2.98f, -7.2f);
+    glRotatef(270,0,1,0);
+    glRotatef(7,0,0,1);
+    tail.draw();
+    glTranslatef(0.81f,-0.46f,0);
+    glScalef(1.12,1.12,1);
+    glRotatef(alpha*30, 0, 0, 1);
+    logo.draw();
+    glPopMatrix();
+
+
+    glPushMatrix();
+    glTranslatef(2.8,0,0);
+    glTranslatef(-0.65,-1.3,-6);
+    glRotatef(90,0,1,0);
+    glRotatef(180,0,0,1);
+    glRotatef(-22, 1,1,0);
+    glRotatef(-5,0,1,0);
+    wing_left.draw();
+    glPopMatrix();
+
+
+    glPushMatrix();
+    glTranslatef(-2.1,0,0);
+    glTranslatef(-0.65,-1.3,-4.2);
+    glRotatef(90,0,1,0);
+    glRotatef(180,0,0,1);
+    glRotatef(-22, 1,1,0);
+    glRotatef(210,1,0,0);
+    glRotatef(-28,0,1,0);
+    glRotatef(12,0,0,1);
+//    glRotatef(-120,1,0,0);
+    wing_right.draw();
+    glPopMatrix();
+
+
+    body.draw();
+    //    wing_left.draw();
+    //    wing_right.draw();
+
     tau+=1;
 
+    alpha+=INTERVAL;
     // Look at the PlyModel class to see how the drawing is done
     /*
      * The models you load can have different scales. If you are drawing a proper model but nothing
@@ -262,8 +344,8 @@ void CCanvas::paintGL()
     textureTrain.unbind();
     texturePlanet1.bind();
     glPushMatrix();
-    glScaled(50,40,40);
-    glTranslatef(0.f,-1.5f,-2.0f);
+    glScaled(25,20,20);
+    glTranslatef(0.f,-1.5f,-1.0f);
     glRotatef(-tau/10,0.f,1.f,0.f);
     Sphere s(40, 40);
     s.draw();
