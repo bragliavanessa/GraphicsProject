@@ -208,7 +208,7 @@ void CCanvas::paintGL()
     static float alpha=90;
     // clear screen and depth buffer
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    GLfloat amb[]  = {1, 1, 1};
+    GLfloat amb[]  = {0.2f, 0.2f,0.2f};
     GLfloat diff[] = {0.7f, 0.7f, 0.7f};
     GLfloat spec[] = {0.1f, 0.1f, 0.1f};
     GLfloat shin = 0.0001;
@@ -239,7 +239,7 @@ void CCanvas::paintGL()
     textureSky.unbind();
 
     // Drawing the object with texture
-    textureTrain.bind();
+//    textureTrain.bind();
     // You can stack new transformation matrix if you don't want
     // the previous transformations to apply on this object
     glPushMatrix();
@@ -271,8 +271,6 @@ void CCanvas::paintGL()
     glRotatef(alpha*100,0,1,0);
 
     glTranslatef(20, 0, 0);
-    //    glRotatef(50,cos(alpha),sin(alpha),0);
-    //    modelTrain.draw();
     glRotatef(180,0,1,0);
 
     glPushMatrix();
@@ -298,7 +296,6 @@ void CCanvas::paintGL()
     logo.draw();
     glPopMatrix();
 
-
     glPushMatrix();
     glTranslatef(2.8,0,0);
     glTranslatef(-0.65,-1.3,-6);
@@ -309,7 +306,6 @@ void CCanvas::paintGL()
     wing_left.draw();
     glPopMatrix();
 
-
     glPushMatrix();
     glTranslatef(-2.1,0,0);
     glTranslatef(-0.65,-1.3,-4.2);
@@ -319,14 +315,10 @@ void CCanvas::paintGL()
     glRotatef(210,1,0,0);
     glRotatef(-28,0,1,0);
     glRotatef(12,0,0,1);
-//    glRotatef(-120,1,0,0);
     wing_right.draw();
     glPopMatrix();
 
-
     body.draw();
-    //    wing_left.draw();
-    //    wing_right.draw();
 
     tau+=1;
 
@@ -341,7 +333,7 @@ void CCanvas::paintGL()
     // Remove the last transformation matrix from the stack - you have drawn your last
     // object with a new transformation and now you go back to the previous one
     glPopMatrix();
-    textureTrain.unbind();
+//    textureTrain.unbind();
     texturePlanet1.bind();
     glPushMatrix();
     glScaled(25,20,20);
