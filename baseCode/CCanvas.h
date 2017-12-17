@@ -27,6 +27,7 @@ class CCanvas : public QGLWidget
 
 public:
     explicit CCanvas(QWidget *parent = 0) : QGLWidget(parent),
+        body_texture(global_path + "/../images/body.png"),
         textureTrain(global_path + "/../images/train1.jpg"),
         texturePlanet1(global_path + "/../images/earth.jpg"),
         texturePlanet2(global_path + "/../images/moon.png"),
@@ -34,7 +35,7 @@ public:
         modelTrain(global_path + "/../images/ship.obj"),
         modelTrain2(global_path + "/../images/train.ply"),
         skybox(global_path + "/../images/skybox.obj"),
-        body(global_path + "/../images/body.obj"),
+        body(global_path + "/../images/body_test.obj"),
         logo(global_path + "/../images/logo.obj"),
         tail(global_path + "/../images/tail.obj"),
         wing_left(global_path + "/../images/wing_left.obj"),
@@ -79,6 +80,7 @@ private:
 
     // Models and textures
     Texture textureTrain;
+    Texture body_texture;
     Texture textureSky;
     Texture texturePlanet1;
     Texture texturePlanet2;

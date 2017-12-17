@@ -46,6 +46,7 @@ void CCanvas::initializeGL()
      */
     textureTrain.setTexture();
     textureSky.setTexture();
+    body_texture.setTexture();
     texturePlanet1.setTexture();
     texturePlanet2.setTexture();
     texturePlanet3.setTexture();
@@ -312,7 +313,9 @@ void CCanvas::paintGL()
     wing_right.draw();
     glPopMatrix();
 
+    body_texture.bind();
     body.draw();
+    body_texture.unbind();
 
     tau+=1;
 
