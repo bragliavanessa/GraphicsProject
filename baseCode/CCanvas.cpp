@@ -5,6 +5,8 @@
 
 using namespace std;
 
+float alpha = 90;
+
 //-----------------------------------------------------------------------------
 
 void CCanvas::initializeGL()
@@ -97,14 +99,14 @@ void CCanvas::glPerspective(const GLdouble fovy, const GLdouble aspect, const GL
 }
 
 void CCanvas::lookAt(const GLdouble eyeX,
-                        const GLdouble eyeY,						// VP on the course slides
-                        const GLdouble eyeZ,
-                        const GLdouble centerX,
-                        const GLdouble centerY,					// q on the course slides
-                        const GLdouble centerZ,
-                        const GLdouble upX,
-                        const GLdouble upY,							// VUP on the course slides
-                        const GLdouble upZ )
+                     const GLdouble eyeY,						// VP on the course slides
+                     const GLdouble eyeZ,
+                     const GLdouble centerX,
+                     const GLdouble centerY,					// q on the course slides
+                     const GLdouble centerZ,
+                     const GLdouble upX,
+                     const GLdouble upY,							// VUP on the course slides
+                     const GLdouble upZ )
 {
     Point3d VP(eyeX, eyeY, eyeZ);
     Point3d q(centerX, centerY, centerZ);
@@ -187,8 +189,13 @@ void CCanvas::setView(View _view) {
         break;
     case Cockpit:
         // Maybe you want to have an option to view the scene from the train cockpit, up to you
-        glTranslatef(0.f, 20.f, -65.0f);
-        //        glRotatef(180.0f, 1.0f, 0.0f, 0.0f);
+        glRotatef(60, 0,1,0);
+        glRotatef(10, 0,0,1);
+        glTranslatef(0.f, 0.f, -65.0f);
+        glRotatef(-90,0,1,0);
+        glTranslatef(24, 0, -10);
+        glRotatef(-alpha*100,0,1,0);
+        glTranslatef(0.f,10.f,0.0f);
         break;
     }
 }
@@ -198,7 +205,6 @@ void CCanvas::paintGL()
     const double RADIUS = 17.1f;
     const double INTERVAL = 0.01;
     static float tau=35;
-    static float alpha=90;
     // clear screen and depth buffer
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     GLfloat amb[]  = {0.2f, 0.2f,0.2f};
@@ -234,7 +240,7 @@ void CCanvas::paintGL()
     textureSky.unbind();
 
     // Drawing the object with texture
-//    textureTrain.bind();
+    //    textureTrain.bind();
     // You can stack new transformation matrix if you don't want
     // the previous transformations to apply on this object
     glPushMatrix();
@@ -261,12 +267,19 @@ void CCanvas::paintGL()
     glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, spec);
     glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, &shin);
     // Look at the ObjModel class to see how the drawing is done
+
     glScaled(2,2,2);
-    glTranslatef(0.f,-10.f,-10.0f);
+    glTranslatef(0.f,-10.f,0.0f);
     glRotatef(alpha*100,0,1,0);
 
     glTranslatef(20, 0, 0);
     glRotatef(180,0,1,0);
+
+    body_texture.bind();
+    body.draw();
+    body_texture.unbind();
+
+
 
     glPushMatrix();
     glTranslatef(0.f,2.05f,1.4f);
@@ -313,10 +326,6 @@ void CCanvas::paintGL()
     wing_right.draw();
     glPopMatrix();
 
-    body_texture.bind();
-    body.draw();
-    body_texture.unbind();
-
     tau+=1;
 
     alpha+=INTERVAL;
@@ -330,11 +339,11 @@ void CCanvas::paintGL()
     // Remove the last transformation matrix from the stack - you have drawn your last
     // object with a new transformation and now you go back to the previous one
     glPopMatrix();
-//    textureTrain.unbind();
+    //    textureTrain.unbind();
     texturePlanet1.bind();
     glPushMatrix();
-    glScaled(25,20,20);
-    glTranslatef(0.f,-1.5f,-1.0f);
+    glScaled(20,20,20);
+    glTranslatef(0.f,-1.5f,0);
     glRotatef(-tau/10,0.f,1.f,0.f);
     Sphere s(40, 40);
     s.draw();
