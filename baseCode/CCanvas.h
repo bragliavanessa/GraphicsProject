@@ -53,6 +53,7 @@ protected:
     void initializeGL();
     void resizeGL(int width, int height);
     void paintGL();
+    void keyPressEvent(QKeyEvent * event);
 
 private:
     void lookAt(const GLdouble eyex,

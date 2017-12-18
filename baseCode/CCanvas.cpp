@@ -9,8 +9,12 @@ float alpha = 90;
 
 //-----------------------------------------------------------------------------
 
+void CCanvas::keyPressEvent(QKeyEvent *event) {
+    std::cout << "Pressed " << event->key() << std::endl;
+}
 void CCanvas::initializeGL()
 {
+    this->setFocusPolicy(Qt::StrongFocus);
     glClearColor(0.0f, 0.0f, 0.0f, 0.5f);			   // black background
     glClearDepth(1.0f);								   // depth buffer setup
     glEnable(GL_DEPTH_TEST);						   // enables depth testing
