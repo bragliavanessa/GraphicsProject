@@ -28,8 +28,8 @@ class CCanvas : public QGLWidget
 public:
     explicit CCanvas(QWidget *parent = 0) : QGLWidget(parent),
         body_texture(global_path + "/../images/body.png"),
-        textureTrain(global_path + "/../images/train1.jpg"),
-        texturePlanet1(global_path + "/../images/earth.jpg"),
+        textureTrain(global_path + "/../images/earth.jpg"),
+        texturePlanet1(global_path + "/../images/train1.jpg"),
         texturePlanet2(global_path + "/../images/moon.png"),
         texturePlanet3(global_path + "/../images/pluton.png"),
         modelTrain(global_path + "/../images/ship.obj"),
