@@ -122,16 +122,10 @@ void CCanvas::initializeGL()
      * light in eye coordinates, and attenuation is enabled. The default position is (0,0,1,0); thus,
      * the default light source is directional, parallel to, and in the direction of the -z axis.
      */
-    GLfloat lightpos[] = {0.0, 0.0, 1.0, 0.0};
+    GLfloat lightpos[] = {10.0, 10.0, 5.0, 5.0};
     glLightfv(GL_LIGHT0, GL_POSITION, lightpos);
 
-    GLfloat lightAmb[]  = {0.3, 0.3, 0.3};
-    GLfloat lightDiff[] = {0.4, 0.4, 0.4};
-    GLfloat lightSpec[] = {0.5, 0.5, 0.5};
 
-    glLightfv(GL_LIGHT0, GL_SPECULAR, lightSpec);
-    glLightfv(GL_LIGHT0, GL_AMBIENT,  lightAmb);
-    glLightfv(GL_LIGHT0, GL_DIFFUSE,  lightDiff);
 
     /*
      * Before you can use the texture you need to initialize it by calling the setTexture() method.
@@ -301,7 +295,7 @@ void CCanvas::paintGL()
     static float tau=35;
     // clear screen and depth buffer
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    GLfloat amb[]  = {0.2f, 0.2f,0.2f};
+    GLfloat amb[]  = {0.1f, 0.1f, 0.1f};
     GLfloat diff[] = {0.7f, 0.7f, 0.7f};
     GLfloat spec[] = {0.1f, 0.1f, 0.1f};
     GLfloat shin = 0.0001;
@@ -409,23 +403,23 @@ void CCanvas::paintGL()
 
     glPushMatrix();
     glTranslatef(2.8,0,0);
-    glTranslatef(-0.65,-1.3,-6);
-    glRotatef(90,0,1,0);
-    glRotatef(180,0,0,1);
-    glRotatef(-22, 1,1,0);
-    glRotatef(-5,0,1,0);
+    glTranslatef(-0.2,-0.8,-5);
+    glRotatef(95,0,1,0);
+    glRotatef(185,0,0,1);
+    glRotatef(-10, 50,1,0);
+    glRotatef(-10,0,1,0);
     wing_left.draw();
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(-2.1,0,0);
-    glTranslatef(-0.65,-1.3,-4.2);
+    glTranslatef(-0.45,-0.9,-5.1);
     glRotatef(90,0,1,0);
     glRotatef(180,0,0,1);
     glRotatef(-22, 1,1,0);
     glRotatef(210,1,0,0);
-    glRotatef(-28,0,1,0);
-    glRotatef(12,0,0,1);
+    glRotatef(-30,0,1,0);
+    glRotatef(0,0,0,1);
     wing_right.draw();
     glPopMatrix();
 
