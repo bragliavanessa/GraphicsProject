@@ -188,8 +188,9 @@ void CCanvas::resizeGL(int width, int height)
 void CCanvas::setView(View _view) {
     switch(_view) {
     case Perspective:
-        glTranslatef(1.0, -2.5, -10.0);
-        glRotatef(45.0f, 0.0f, 1.0f, 0.0f);
+//        glTranslatef(1.0, -2.5, -10.0);
+//        glRotatef(45.0f, 0.0f, 1.0f, 0.0f);
+        glTranslatef(0.f, 0.f, -95.0f);
         break;
     case Cockpit:
         // Maybe you want to have an option to view the scene from the train cockpit, up to you
@@ -224,7 +225,7 @@ void CCanvas::paintGL()
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
     // Setup the current view
-    setView(View::Cockpit);
+    setView(View::Perspective);
     //    glRotated(0,2,3,1);
     //    glRotated(tau/3,5,3,1);
     textureSky.bind();
@@ -310,23 +311,23 @@ void CCanvas::paintGL()
 
     glPushMatrix();
     glTranslatef(2.8,0,0);
-    glTranslatef(-0.65,-1.3,-6);
-    glRotatef(90,0,1,0);
-    glRotatef(180,0,0,1);
-    glRotatef(-22, 1,1,0);
-    glRotatef(-5,0,1,0);
+    glTranslatef(-0.2,-0.8,-5);
+    glRotatef(95,0,1,0);
+    glRotatef(185,0,0,1);
+    glRotatef(-10, 50,1,0);
+    glRotatef(-10,0,1,0);
     wing_left.draw();
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(-2.1,0,0);
-    glTranslatef(-0.65,-1.3,-4.2);
+    glTranslatef(-0.45,-0.9,-5.1);
     glRotatef(90,0,1,0);
     glRotatef(180,0,0,1);
     glRotatef(-22, 1,1,0);
     glRotatef(210,1,0,0);
-    glRotatef(-28,0,1,0);
-    glRotatef(12,0,0,1);
+    glRotatef(-30,0,1,0);
+    glRotatef(0,0,0,1);
     wing_right.draw();
     glPopMatrix();
 
