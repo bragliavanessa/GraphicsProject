@@ -74,7 +74,8 @@ private:
 
     enum View {
         Perspective = 0,    // View the scene from a perspective (from above, from a side, or whatever)
-        Cockpit             // View the scene from the train cockpit (if you want, or whatever other view)
+        Cockpit,            // View the scene from the train cockpit (if you want, or whatever other view)
+        Free
     };
 
     void setView(View _view);

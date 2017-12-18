@@ -6,11 +6,98 @@
 using namespace std;
 
 float alpha = 90;
+int view = 0;
+double turret_rot = 0;
 
+struct camera {
+    double x = 0;
+    double y = 0;
+    double z = 65;
+    double dx = 0;
+    double dy = 0;
+    double dz = 64;
+    double ux = 0;
+    double uy = 1;
+    double uz = 0;
+} c;
 //-----------------------------------------------------------------------------
 
 void CCanvas::keyPressEvent(QKeyEvent *event) {
     std::cout << "Pressed " << event->key() << std::endl;
+    double temp_x;
+    double temp_z;
+    double temp_y;
+    double ang_x;
+    double temp;
+    std::cout<<c.x<<" "<<c.y<<" "<<c.z<<endl;
+    std::cout<<c.dx<<" "<<c.dy<<" "<<c.dz<<endl;
+
+    switch(event->key()){
+    case 32: //space
+        view++;
+        view %= 3;
+        break;
+    case 83: //s
+        temp = c.z;
+        c.z += c.z - c.dz;
+        c.dz += temp - c.dz;
+        temp = c.x;
+        c.x += c.x - c.dx;
+        c.dx += temp - c.dx;
+        temp = c.y;
+        c.y += c.y - c.dy;
+        c.dy += temp - c.dy;
+        break;
+    case 87: //w
+        temp = c.z;
+        c.z -= c.z - c.dz;//1
+        c.dz -= temp - c.dz;
+        temp = c.x;
+        c.x -= c.x - c.dx;//2
+        c.dx -= temp - c.dx;
+        temp = c.y;
+        c.y -= c.y - c.dy;//2
+        c.dy -= temp - c.dy;
+        break;
+//    case 68: //d
+//        c.x+=1;
+//        c.dx+=1;
+//        break;
+//    case 65: //a
+//        c.x-=1;
+//        c.dx-=1;
+//        break;
+    case 16777235://up
+        temp_y = c.y - c.dy;
+        temp_z = c.z - c.dz;
+        ang_x = std::atan2f(temp_y,temp_z) - 0.1;
+        c.y = c.dy + std::sin(ang_x);
+        c.z = c.dz + std::cos(ang_x);
+        break;
+    case 65:
+    case 16777234://left
+        temp_x = c.x - c.dx;
+        temp_z = c.z - c.dz;
+        ang_x = std::atan2f(temp_x,temp_z) + 0.1;
+        c.x = c.dx + std::sin(ang_x);
+        c.z = c.dz + std::cos(ang_x);
+        break;
+    case 16777237://down
+        temp_y = c.y - c.dy;
+        temp_z = c.z - c.dz;
+        ang_x = std::atan2f(temp_y,temp_z) + 0.1;
+        c.y = c.dy + std::sin(ang_x);
+        c.z = c.dz + std::cos(ang_x);
+        break;
+    case 68:
+    case 16777236://right
+        temp_x = c.x - c.dx;
+        temp_z = c.z - c.dz;
+        ang_x = std::atan2f(temp_x,temp_z) - 0.1;
+        c.x = c.dx + std::sin(ang_x);
+        c.z = c.dz + std::cos(ang_x);
+        break;
+    }
 }
 void CCanvas::initializeGL()
 {
@@ -188,8 +275,7 @@ void CCanvas::resizeGL(int width, int height)
 void CCanvas::setView(View _view) {
     switch(_view) {
     case Perspective:
-        glTranslatef(1.0, -2.5, -10.0);
-        glRotatef(45.0f, 0.0f, 1.0f, 0.0f);
+        glTranslatef(0.f, 0.f, -95.0f);
         break;
     case Cockpit:
         // Maybe you want to have an option to view the scene from the train cockpit, up to you
@@ -201,11 +287,15 @@ void CCanvas::setView(View _view) {
         glRotatef(-alpha*100,0,1,0);
         glTranslatef(0.f,10.f,0.0f);
         break;
+    case Free:
+        lookAt(c.x,c.y,c.z,  c.dx,c.dy,c.dz,  c.ux,c.uy,c.uz);
+        break;
     }
 }
 
 void CCanvas::paintGL()
 {
+    static camera c;
     const double RADIUS = 17.1f;
     const double INTERVAL = 0.01;
     static float tau=35;
@@ -224,9 +314,18 @@ void CCanvas::paintGL()
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
     // Setup the current view
-    setView(View::Cockpit);
-    //    glRotated(0,2,3,1);
-    //    glRotated(tau/3,5,3,1);
+    switch(view){
+    case 0:
+        setView(View::Perspective);
+        break;
+    case 1:
+        setView(View::Cockpit);
+        break;
+    case 2:
+        setView(View::Free);
+        break;
+    }
+
     textureSky.bind();
     glPushMatrix();
     glRotated(0,0,1,0);
