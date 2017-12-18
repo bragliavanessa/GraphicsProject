@@ -35,16 +35,10 @@ void CCanvas::initializeGL()
      * light in eye coordinates, and attenuation is enabled. The default position is (0,0,1,0); thus,
      * the default light source is directional, parallel to, and in the direction of the -z axis.
      */
-    GLfloat lightpos[] = {0.0, 0.0, 1.0, 0.0};
+    GLfloat lightpos[] = {10.0, 10.0, 5.0, 5.0};
     glLightfv(GL_LIGHT0, GL_POSITION, lightpos);
 
-    GLfloat lightAmb[]  = {0.3, 0.3, 0.3};
-    GLfloat lightDiff[] = {0.4, 0.4, 0.4};
-    GLfloat lightSpec[] = {0.5, 0.5, 0.5};
 
-    glLightfv(GL_LIGHT0, GL_SPECULAR, lightSpec);
-    glLightfv(GL_LIGHT0, GL_AMBIENT,  lightAmb);
-    glLightfv(GL_LIGHT0, GL_DIFFUSE,  lightDiff);
 
     /*
      * Before you can use the texture you need to initialize it by calling the setTexture() method.
@@ -212,7 +206,7 @@ void CCanvas::paintGL()
     static float tau=35;
     // clear screen and depth buffer
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    GLfloat amb[]  = {0.2f, 0.2f,0.2f};
+    GLfloat amb[]  = {0.1f, 0.1f, 0.1f};
     GLfloat diff[] = {0.7f, 0.7f, 0.7f};
     GLfloat spec[] = {0.1f, 0.1f, 0.1f};
     GLfloat shin = 0.0001;
