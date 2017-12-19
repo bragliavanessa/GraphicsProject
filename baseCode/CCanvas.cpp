@@ -107,7 +107,7 @@ void CCanvas::initializeGL()
     glEnable(GL_DEPTH_TEST);						   // enables depth testing
     glDepthFunc(GL_LEQUAL);							   // the type of depth testing to do
     glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST); // really nice perspective calculations
-    glShadeModel(GL_FLAT);
+    glShadeModel(GL_SMOOTH);
 
     // One light source
     glEnable(GL_LIGHTING);
@@ -295,9 +295,9 @@ void CCanvas::paintGL()
     static float tau=35;
     // clear screen and depth buffer
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    GLfloat amb[]  = {0.1f, 0.1f, 0.1f};
+    GLfloat amb[]  = {0.4f, 0.4f, 0.4f};
     GLfloat diff[] = {0.7f, 0.7f, 0.7f};
-    GLfloat spec[] = {0.1f, 0.1f, 0.1f};
+    GLfloat spec[] = {0.4f, 0.4f, 0.4f};
     GLfloat shin = 0.0001;
     // set model-view matrix
     glMatrixMode(GL_MODELVIEW);
@@ -442,7 +442,7 @@ void CCanvas::paintGL()
     glScaled(20,20,20);
     glTranslatef(0.f,-1.5f,0);
     glRotatef(-tau/10,0.f,1.f,0.f);
-    Sphere s(40, 40);
+    Sphere s(200, 200);
     s.draw();
     glPopMatrix();
     texturePlanet1.unbind();
